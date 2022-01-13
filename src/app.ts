@@ -12,7 +12,7 @@ import connectDB from './db/connect';
 dotenv.config()
 
 
-
+const uri = process.env.MONGODB_URI
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import { string } from 'joi';
@@ -57,7 +57,7 @@ app.use(function (err: HttpError, req: Request, res: Response, next: NextFunctio
 
 const start = async () => {
   try {
-    await connectDB(`${process.env.URI}`);
+    await connectDB(`${uri}`);
     console.log('Connecected to DB')
   } catch (error) {
     console.log(error);
