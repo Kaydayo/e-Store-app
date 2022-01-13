@@ -5,16 +5,17 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import authorsRouter from './routes/authors'
 import cors from 'cors';
-import { Secret, verify } from 'jsonwebtoken';
 import 'dotenv/config';
-import { createAccessToken, createRefreshToken, sendAccessToken, sendRefreshToken } from './auth/token';
+import dotenv from 'dotenv'
 import connectDB from './db/connect';
 
+dotenv.config()
 
 
 
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
+import { string } from 'joi';
 
 export const app = express();
 
@@ -56,7 +57,7 @@ app.use(function (err: HttpError, req: Request, res: Response, next: NextFunctio
 
 const start = async () => {
   try {
-    await connectDB('mongodb+srv://emjay:emjay@authors0.wmuxh.mongodb.net/test?retryWrites=true&w=majority');
+    await connectDB(`${process.env.URI}`);
     console.log('Connecected to DB')
   } catch (error) {
     console.log(error);
