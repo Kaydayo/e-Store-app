@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 const AuthorSchema = new mongoose.Schema({
     authorId: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     author: {
         type: String,

@@ -2,16 +2,16 @@ import mongoose, { Document } from "mongoose";
 import validator from 'validator';
 import bcrypt from 'bcryptjs'
 
-export interface IUser extends Document{
+export interface IUser extends Document {
     firstName: string;
     lastName: string;
     DOB: string;
     email: string;
-    phoneNumber: number;
+    phoneNumber: string;
     password: string;
 
 
-} 
+}
 
 const UserSchema = new mongoose.Schema({
     firstName: {
@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema({
         unique: true
     },
     phoneNumber: {
-        type: Number,
+        type: String,
         required: true,
         unique: true
     },
