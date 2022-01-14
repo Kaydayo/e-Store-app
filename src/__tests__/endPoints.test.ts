@@ -174,4 +174,3 @@ describe('DELETE AUTHORS & AUTHOR BOOKS', () => {
 
 })
 
-afterAll(() => mongoose.disconnect());

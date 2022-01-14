@@ -40,7 +40,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
-var mongoose_1 = __importDefault(require("mongoose"));
 var app_1 = __importDefault(require("../app"));
 var fixtures_1 = require("../db/fixtures");
 var fakeAuthorData = {
@@ -263,4 +262,3 @@ describe('DELETE AUTHORS & AUTHOR BOOKS', function () {
         });
     }); });
 });
-afterAll(function () { return mongoose_1.default.disconnect(); });
