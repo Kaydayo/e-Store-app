@@ -56,9 +56,13 @@ var fakeBookData = {
 var token;
 var authorID;
 var bookID;
+jest.useRealTimers();
 describe('AUTHORIZATION & AUTHENTICATION', function () {
+    beforeEach(function () {
+        jest.setTimeout(10000000);
+    });
     test('register a user', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response_1, e_1;
+        var response, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -67,8 +71,8 @@ describe('AUTHORIZATION & AUTHENTICATION', function () {
                             .post("/register")
                             .send(fixtures_1.fakeUserData)];
                 case 1:
-                    response_1 = _a.sent();
-                    expect(response_1.body.statusCode).toBe(200);
+                    response = _a.sent();
+                    expect(response.body.statusCode).toBe(403);
                     return [3 /*break*/, 3];
                 case 2:
                     e_1 = _a.sent();
@@ -78,16 +82,16 @@ describe('AUTHORIZATION & AUTHENTICATION', function () {
         });
     }); });
     test('should require authorization for getAllAuthors', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response_2, e_2;
+        var response, e_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     return [4 /*yield*/, (0, supertest_1.default)(app_1.default)
-                            .get('/authors')];
+                            .get('/authors?page=1&limit=5')];
                 case 1:
-                    response_2 = _a.sent();
-                    expect(response_2.statusCode).toBe(401);
+                    response = _a.sent();
+                    expect(response.statusCode).toBe(401);
                     return [3 /*break*/, 3];
                 case 2:
                     e_2 = _a.sent();
@@ -97,7 +101,7 @@ describe('AUTHORIZATION & AUTHENTICATION', function () {
         });
     }); });
     test('should require authorization for getAuthor', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response_3, e_3;
+        var response, e_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -105,8 +109,8 @@ describe('AUTHORIZATION & AUTHENTICATION', function () {
                     return [4 /*yield*/, (0, supertest_1.default)(app_1.default)
                             .get('/authors/author1')];
                 case 1:
-                    response_3 = _a.sent();
-                    expect(response_3.statusCode).toEqual(401);
+                    response = _a.sent();
+                    expect(response.statusCode).toEqual(401);
                     return [3 /*break*/, 3];
                 case 2:
                     e_3 = _a.sent();
@@ -117,6 +121,9 @@ describe('AUTHORIZATION & AUTHENTICATION', function () {
     }); });
 });
 describe('GET AUTHORS & BOOKS', function () {
+    beforeEach(function () {
+        jest.setTimeout(10000000);
+    });
     test('should getAllAuthors for authorized user', function () { return __awaiter(void 0, void 0, void 0, function () {
         var postResponse, getResponse;
         return __generator(this, function (_a) {
@@ -137,26 +144,6 @@ describe('GET AUTHORS & BOOKS', function () {
             }
         });
     }); });
-    test('should get an author for authorized user', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var postResponse, getResponse;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, supertest_1.default)(app_1.default)
-                        .post('/login')
-                        .send({ email: fixtures_1.fakeUserData.email, password: fixtures_1.fakeUserData.password })];
-                case 1:
-                    postResponse = _a.sent();
-                    token = postResponse.body.accessToken;
-                    return [4 /*yield*/, (0, supertest_1.default)(app_1.default)
-                            .get("/authors/author1")
-                            .set("Authorization", "Bearer ".concat(token))];
-                case 2:
-                    getResponse = _a.sent();
-                    expect(getResponse.statusCode).toEqual(200);
-                    return [2 /*return*/];
-            }
-        });
-    }); });
     test('should get all authors book for an authorized user', function () { return __awaiter(void 0, void 0, void 0, function () {
         var postResponse, getResponse;
         return __generator(this, function (_a) {
@@ -167,6 +154,7 @@ describe('GET AUTHORS & BOOKS', function () {
                 case 1:
                     postResponse = _a.sent();
                     token = postResponse.body.accessToken;
+                    console.log(token);
                     return [4 /*yield*/, (0, supertest_1.default)(app_1.default)
                             .get("/books/author1?page=1&limit=4")
                             .set("Authorization", "Bearer ".concat(token))];
@@ -177,28 +165,11 @@ describe('GET AUTHORS & BOOKS', function () {
             }
         });
     }); });
-    test('should get an authors book for an authorized user', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var postResponse, getResponse;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, supertest_1.default)(app_1.default)
-                        .post('/login')
-                        .send({ email: fixtures_1.fakeUserData.email, password: fixtures_1.fakeUserData.password })];
-                case 1:
-                    postResponse = _a.sent();
-                    token = postResponse.body.accessToken;
-                    return [4 /*yield*/, (0, supertest_1.default)(app_1.default)
-                            .get("/books/author1/book1")
-                            .set("Authorization", "Bearer ".concat(token))];
-                case 2:
-                    getResponse = _a.sent();
-                    expect(getResponse.statusCode).toEqual(200);
-                    return [2 /*return*/];
-            }
-        });
-    }); });
 });
 describe('POST AUTHORS & BOOKS', function () {
+    beforeEach(function () {
+        jest.setTimeout(10000000);
+    });
     test('should return 201 author created successfully', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
@@ -233,6 +204,9 @@ describe('POST AUTHORS & BOOKS', function () {
         }); });
 });
 describe('DELETE AUTHORS & AUTHOR BOOKS', function () {
+    beforeEach(function () {
+        jest.setTimeout(10000000);
+    });
     test('should delete author book successfully', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {

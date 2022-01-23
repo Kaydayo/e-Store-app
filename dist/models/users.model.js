@@ -81,8 +81,6 @@ UserSchema.pre('save', function (next) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    // console.log(this.modifiedPaths());
-                    // console.log(this.isModified('name'));
                     if (!this.isModified('password'))
                         return [2 /*return*/];
                     return [4 /*yield*/, bcryptjs_1.default.genSalt(10)];

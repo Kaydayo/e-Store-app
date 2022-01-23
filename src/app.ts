@@ -7,21 +7,16 @@ import authorsRouter from './routes/authors'
 import cors from 'cors';
 import 'dotenv/config';
 import dotenv from 'dotenv'
-import connectDB from './db/connect';
 
 dotenv.config()
 
-
-const uri = process.env.MONGODB_URI
-import indexRouter from './routes/index';
-import usersRouter from './routes/users';
-import { string } from 'joi';
+import { connectTestDB,connectDB } from './utils/dbHandler.utils';
 
 export const app = express();
 
 
 app.set('views', path.join(__dirname, '../views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 
 app.use(cors())
@@ -55,15 +50,11 @@ app.use(function (err: HttpError, req: Request, res: Response, next: NextFunctio
 });
 
 
-const start = async () => {
-  try {
-    await connectDB(`${uri}`);
-    console.log('Connecected to DB')
-  } catch (error) {
-    console.log(error);
-  }
-};
+if(process.env.NODE_ENV == 'test'){
+  connectTestDB()
+}else{
+  connectDB()
+}
 
-start();
 
 export default app;

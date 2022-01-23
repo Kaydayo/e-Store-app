@@ -127,7 +127,7 @@ export const deleteBook = async (req: Request, res: Response, next: NextFunction
         if (!book) {
             throw new Error(`No books with id ${bookId}`)
         }
-        await book.remove({ bookId: bookId })
+        await book.remove({ bookId })
         res.status(200).json({ message: 'successfully deleted book' })
     } catch (err: any) {
         res.status(400).json('invalid ')
@@ -201,7 +201,6 @@ export const loginAuthor = async (req: Request, res: Response, next: NextFunctio
             res.status(401).send('invalid, user not found')
         }
     }
-
 }
 
 export const registerAuthor = async (req: Request, res: Response, next: NextFunction) => {

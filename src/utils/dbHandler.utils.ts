@@ -1,23 +1,28 @@
 import mongoose from 'mongoose'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 
-const mongoServer =  MongoMemoryServer.create();
 
-export const dbConnect = async () => {
-    const uri = (await mongoServer).getUri();
-
-    const mongooseOpts = {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindandModify: false,
-    };
-
-    await mongoose.connect(uri);
-}
-
-export const dbDisconnect = async () => {
-    await mongoose.connection.dropDatabase();
-    await mongoose.connection.close();
-    await (await mongoServer).stop()
+export const connectDB = () => {
+    try {
+      mongoose.connect(process.env.MONGODB_URI as string).then(() => {
+        console.log("Connected to DB");
+      });
+    } catch (error) {
+      console.log(error);
+    }
 };
+
+
+export const connectTestDB = () => {
+    try{
+      MongoMemoryServer.create().then((mongo) => {
+        const uri = mongo.getUri();
+        mongoose.connect(uri).then(() => {
+          //console.log("connected to testDB");
+        });
+      });
+    }
+    catch (error) {
+      //console.log(error);
+    }
+  };

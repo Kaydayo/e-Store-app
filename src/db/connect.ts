@@ -1,9 +1,9 @@
-import mongoose from 'mongoose'
+// import mongoose from 'mongoose'
 
-const connectDB = (url: string) => {
-    return mongoose.connect(url);
-};
+// const connectDB = (url: string) => {
+//     return mongoose.connect(url);
+// };
 
-export default connectDB
+// export default connectDB
 
 

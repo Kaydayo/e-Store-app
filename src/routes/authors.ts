@@ -1,5 +1,19 @@
 import express from 'express';
-import { getAllAuthors, postAuthors, updateAuthor, getAuthor, deleteAuthor, postBook, deleteBook, getABook, loginAuthor, registerAuthor, logoutAuthor, getAllBooks, updateBook } from '../controller/books.controller';
+import { 
+    getAllAuthors, 
+    postAuthors, 
+    updateAuthor, 
+    getAuthor, 
+    deleteAuthor, 
+    postBook, 
+    deleteBook, 
+    getABook, 
+    loginAuthor, 
+    registerAuthor, 
+    logoutAuthor, 
+    getAllBooks, 
+    updateBook 
+} from '../controller/books.controller';
 import { isAuth } from '../auth/isAuth'
 import Authors from '../models/authors.model';
 import Books from '../models/book.model';
@@ -16,6 +30,7 @@ router.post('/books/:id', isAuth, postBook);
 router.post('/register', registerAuthor);
 router.post('/login', loginAuthor);
 router.post('/logout', logoutAuthor);
+
 
 router.put('/authors/:id', isAuth, updateAuthor)
 router.put('/books/:id/:bookId', isAuth, updateBook)

@@ -53,13 +53,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var book_model_1 = __importDefault(require("../models/book.model"));
 var fixtures_1 = require("../db/fixtures");
 var validators_utils_1 = require("../utils/validators.utils");
-var dbHandler_utils_1 = require("../utils/dbHandler.utils");
-beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/, (0, dbHandler_utils_1.dbConnect)()];
-}); }); });
-afterAll(function () { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/, (0, dbHandler_utils_1.dbDisconnect)()];
-}); }); });
+// import { dbConnect, dbDisconnect } from "../utils/dbHandler.utils"
+var fakeNewBookData = {
+    name: "Tomorrow is coming",
+    isPublished: true,
+    datePublished: 1637159508581,
+    serialNumber: 10
+};
+// beforeAll(async () => dbConnect());
+// afterAll(async () => dbDisconnect());
 describe('Book Model Test Suite', function () {
     test('should validate saving a new book successfully', function () { return __awaiter(void 0, void 0, void 0, function () {
         var validAuthor, savedUser;
